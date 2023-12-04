@@ -7,9 +7,8 @@ def transfer_style(content_image_file_name, style_image_file_name):
     style_image = load_style_image(f"background/{style_image_file_name}")
     style_image = tf.nn.avg_pool(style_image, ksize=[3, 3], strides=[1, 1], padding='SAME')
 
-    # Load model locally
-    local_location = "magenta_arbitrary-image-stylization-v1-256_2"
-    module = tf.saved_model.load(local_location, tags=None, options=None)
+    hub_handle = 'https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2'
+    module = hub.load(hub_handle)
 
     # Save original shape
     shape = [content_image.shape[1], content_image.shape[2]]
